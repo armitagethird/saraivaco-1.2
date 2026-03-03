@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saraiva Co. — Websites que impressionam</title>
+  <meta name="description"
+    content="Saraiva Co. cria experiências digitais de alto impacto para marcas e pessoas que querem se destacar." />
+  <link rel="icon" type="image/webp" href="img/logo/Logo%20Saraiva%20Co..webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap"
+    media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap" />
+  </noscript>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Subtle background particles -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ═══════════════════════  NAVBAR  ═══════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner container">
+      <a href="#" class="nav-logo">
+        <img src="img/logo/Logo%20Saraiva%20Co..webp" alt="Saraiva Co." />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services">Serviços</a></li>
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#work">Projetos</a></li>
+        <li><a href="#testimonials">Depoimentos</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-primary nav-cta">Fale Conosco</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════  HERO  ═══════════════════════ -->
+  <header class="hero" id="hero">
+    <!-- Spline 3D Background (full-screen behind content) -->
+    <div class="hero-3d-bg" id="hero3dBg">
+      <canvas id="canvas3d"></canvas>
+      <div class="hero-3d-overlay"></div>
+      <div class="spline-loader" id="splineLoader">
+        <div class="loader-ring"></div>
+      </div>
+    </div>
+    <div class="hero-bg-glow"></div>
+    <div class="hero-content container">
+      <div class="hero-text">
+        <p class="hero-tag reveal hero-float" style="--float-delay: 0s">SaraivaCo.</p>
+        <h1 class="reveal hero-float" style="--float-delay: 0.15s">
+          Criamos experiências<br />
+          <span class="gradient-text">que ninguém esquece.</span>
+        </h1>
+        <p class="hero-subtitle reveal hero-float" style="--float-delay: 0.3s">
+          Sites inovadores, interfaces imersivas e design de alto impacto
+          para marcas que querem liderar o digital.
+        </p>
+        <div class="hero-actions reveal">
+          <a href="#contact" class="btn btn-primary btn-lg hero-btn-glow">Iniciar um Projeto</a>
+          <a href="#work" class="btn btn-ghost btn-lg hero-btn-shine">Ver Portfólio</a>
+          <a href="#testimonials" class="btn btn-ghost btn-lg hero-btn-shine">Depoimentos</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint reveal">
+      <span>Role para baixo</span>
+      <div class="scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════  SERVICES  ═══════════════════════ -->
+  <section class="services" id="services">
+    <div class="container">
+      <p class="section-tag reveal">O que fazemos</p>
+      <h2 class="section-title reveal">
+        Uma plataforma integrada.<br />
+        <span class="gradient-text">Maior que a soma das partes.</span>
+      </h2>
+      <div class="services-layout">
+        <!-- Left: Buttons -->
+        <div class="services-buttons">
+          <button class="service-btn reveal active" data-service="design">
+            <span class="service-btn-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 9h18" />
+                <path d="M9 21V9" />
+              </svg>
+            </span>
+            <span class="service-btn-label">Web Design</span>
+            <span class="service-btn-arrow">→</span>
+          </button>
+          <button class="service-btn reveal" data-service="dev">
+            <span class="service-btn-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+                <line x1="14" y1="4" x2="10" y2="20" />
+              </svg>
+            </span>
+            <span class="service-btn-label">Desenvolvimento</span>
+            <span class="service-btn-arrow">→</span>
+          </button>
+          <button class="service-btn reveal" data-service="motion">
+            <span class="service-btn-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+            </span>
+            <span class="service-btn-label">3D & Motion</span>
+            <span class="service-btn-arrow">→</span>
+          </button>
+        </div>
+        <!-- Right: Detail Panel (switches content based on active button) -->
+        <div class="services-detail reveal">
+          <!-- Panel: design -->
+          <div class="service-panel active" data-panel="design">
+            <div class="service-panel-inner">
+              <div class="service-panel-header">
+                <div class="service-panel-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <path d="M3 9h18" />
+                    <path d="M9 21V9" />
+                  </svg>
+                </div>
+                <h3>Web Design</h3>
+              </div>
+              <p class="service-panel-desc">Interfaces que encantam. Cada pixel é pensado para contar a história da sua
+                marca com elegância e clareza.</p>
+              <ul class="service-panel-features">
+                <li><span class="feature-dot"></span>UI/UX Design de alto nível</li>
+                <li><span class="feature-dot"></span>Protótipos interativos em Figma</li>
+                <li><span class="feature-dot"></span>Design Systems personalizados</li>
+                <li><span class="feature-dot"></span>Responsividade pixel-perfect</li>
+              </ul>
+              <a href="#contact" class="service-panel-cta">Quero um design incrível <span>→</span></a>
+            </div>
+          </div>
+          <!-- Panel: dev -->
+          <div class="service-panel" data-panel="dev">
+            <div class="service-panel-inner">
+              <div class="service-panel-header">
+                <div class="service-panel-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                    <line x1="14" y1="4" x2="10" y2="20" />
+                  </svg>
+                </div>
+                <h3>Desenvolvimento</h3>
+              </div>
+              <p class="service-panel-desc">Código limpo, performático e escalável. Sites que carregam rápido e
+                funcionam perfeitamente em qualquer dispositivo.</p>
+              <ul class="service-panel-features">
+                <li><span class="feature-dot"></span>HTML5, CSS3, JavaScript moderno</li>
+                <li><span class="feature-dot"></span>Performance otimizada (Core Web Vitals)</li>
+                <li><span class="feature-dot"></span>SEO técnico avançado</li>
+                <li><span class="feature-dot"></span>Integração com APIs e CMS</li>
+              </ul>
+              <a href="#contact" class="service-panel-cta">Iniciar desenvolvimento <span>→</span></a>
+            </div>
+          </div>
+          <!-- Panel: motion -->
+          <div class="service-panel" data-panel="motion">
+            <div class="service-panel-inner">
+              <div class="service-panel-header">
+                <div class="service-panel-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                </div>
+                <h3>3D & Motion</h3>
+              </div>
+              <p class="service-panel-desc">Experiências imersivas com cenas 3D interativas, animações fluidas e motion
+                design que dão vida à presença digital.</p>
+              <ul class="service-panel-features">
+                <li><span class="feature-dot"></span>Cenas 3D interativas (Spline)</li>
+                <li><span class="feature-dot"></span>Animações cinematográficas</li>
+                <li><span class="feature-dot"></span>Motion Design para web</li>
+                <li><span class="feature-dot"></span>Micro-interações de alto impacto</li>
+              </ul>
+              <a href="#contact" class="service-panel-cta">Criar experiência 3D <span>→</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════  ABOUT  ═══════════════════════ -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-header">
+        <p class="section-tag reveal">Por que a Saraiva Co.</p>
+        <h2 class="section-title reveal">
+          Design unificado.<br />
+          <span class="gradient-text">Feito para a era da IA.</span>
+        </h2>
+        <p class="about-intro reveal">
+          Não somos uma agência convencional. Combinamos design de alto nível
+          com tecnologia de ponta para criar sites que convertem, engajam e
+          elevam marcas a outro patamar.
+        </p>
+      </div>
+      <div class="about-cards-interactive">
+        <div class="about-icard reveal" data-about="strategy">
+          <div class="about-icard-front">
+            <div class="about-icard-glow"></div>
+            <span class="about-icard-number">01</span>
+            <h4>Visão Estratégica</h4>
+            <p class="about-icard-teaser">Entendemos o seu negócio antes de desenhar um único pixel.</p>
+            <span class="about-icard-expand">Explorar <span>+</span></span>
+          </div>
+          <div class="about-icard-details">
+            <ul>
+              <li>Pesquisa de mercado e concorrência</li>
+              <li>Definição de personas e jornada do usuário</li>
+              <li>Wireframes e arquitetura de informação</li>
+              <li>Planejamento de conteúdo orientado a resultados</li>
+            </ul>
+          </div>
+        </div>
+        <div class="about-icard reveal" data-about="execution">
+          <div class="about-icard-front">
+            <div class="about-icard-glow"></div>
+            <span class="about-icard-number">02</span>
+            <h4>Execução Impecável</h4>
+            <p class="about-icard-teaser">Do conceito ao código, cada detalhe é refinado até a perfeição.</p>
+            <span class="about-icard-expand">Explorar <span>+</span></span>
+          </div>
+          <div class="about-icard-details">
+            <ul>
+              <li>Design pixel-perfect em todas as telas</li>
+              <li>Código limpo, semântico e performático</li>
+              <li>Testes rigorosos de qualidade</li>
+              <li>Entrega dentro do prazo, sempre</li>
+            </ul>
+          </div>
+        </div>
+        <div class="about-icard reveal" data-about="results">
+          <div class="about-icard-front">
+            <div class="about-icard-glow"></div>
+            <span class="about-icard-number">03</span>
+            <h4>Resultados Reais</h4>
+            <p class="about-icard-teaser">Sites que geram conversões, não apenas likes.</p>
+            <span class="about-icard-expand">Explorar <span>+</span></span>
+          </div>
+          <div class="about-icard-details">
+            <ul>
+              <li>Otimização para conversão (CRO)</li>
+              <li>SEO técnico e de conteúdo</li>
+              <li>Analytics e métricas acionáveis</li>
+              <li>Suporte contínuo pós-lançamento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════  WORK / PORTFOLIO  ═══════════════════════ -->
+  <section class="work" id="work">
+    <div class="container">
+      <p class="section-tag reveal">Projetos Selecionados</p>
+      <h2 class="section-title reveal">
+        Trabalhos que falam<br />
+        <span class="gradient-text">por si mesmos.</span>
+      </h2>
+      <div class="work-grid">
+        <a href="https://armitagethird.github.io/dracarlamaysa/" target="_blank" rel="noopener" class="work-card reveal"
+          style="--card-accent: #c9899a;">
+          <div class="work-card-img"
+            style="background: #f5ede8 url('img/portfolio/dra-carla-maysa.webp') center/contain no-repeat;"></div>
+          <div class="work-card-info">
+            <span class="work-tag">Web Design · Desenvolvimento</span>
+            <h3>Dra. Carla Maysa</h3>
+            <p>Site institucional e landing page elegante para consultório especializado em medicina veterinária.</p>
+          </div>
+        </a>
+        <a href="http://drakerlyhelena.com.br/" target="_blank" rel="noopener" class="work-card reveal"
+          style="--card-accent: #c9899a;">
+          <div class="work-card-img"
+            style="background: #f5ede8 url('img/portfolio/dra-kerly-helena.webp') center/contain no-repeat;"></div>
+          <div class="work-card-info">
+            <span class="work-tag">Web Design · Desenvolvimento</span>
+            <h3>Dra. Kerly Helena</h3>
+            <p>Site institucional com design elegante e tons suaves para consultório de medicina integrativa feminina.
+            </p>
+          </div>
+        </a>
+        <a href="https://armitagethird.github.io/danielhakan/" target="_blank" rel="noopener" class="work-card reveal"
+          style="--card-accent: #c9899a;">
+          <div class="work-card-img"
+            style="background: #15182b url('img/portfolio/daniel-hakan.webp') center/contain no-repeat;"></div>
+          <div class="work-card-info">
+            <span class="work-tag">Web design · Desenvolvimento · Video Integrado</span>
+            <h3>Professor Guitarrista Daniel Hakan</h3>
+            <p>Landing page imersiva com integração de vídeo focada em conversão para aulas de guitarra.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════  TESTIMONIALS  ═══════════════════════ -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <p class="section-tag reveal">O que dizem sobre nós</p>
+      <h2 class="section-title reveal">
+        Clientes que reescreveram<br />
+        <span class="gradient-text">sua presença digital.</span>
+      </h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card glass-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <blockquote>
+            "O design sofisticado e a facilidade de navegação do site mudaram a forma como minhas pacientes interagem
+            com a clínica."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">KH</div>
+            <div>
+              <strong>Dra. Kerly Helena</strong>
+              <span>Medicina Integrativa</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card glass-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <blockquote>
+            "Eles entenderam exatamente o que eu precisava. O site não só ficou lindo e elegante, mas superou as
+            expectativas."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">CM</div>
+            <div>
+              <strong>Dra. Carla Maysa</strong>
+              <span>Medicina Veterinária</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card glass-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <blockquote>
+            "A página captou perfeitamente o meu som. A integração do vídeo trouxe a conversão que eu sempre busquei
+            para minhas aulas."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">DH</div>
+            <div>
+              <strong>Daniel Hakan</strong>
+              <span>Professor de Guitarra</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════  CTA  ═══════════════════════ -->
+  <section class="cta-section" id="contact">
+    <div class="cta-glow"></div>
+    <div class="container cta-inner">
+      <h2 class="reveal">
+        Pronto para criar algo<br />
+        <span class="gradient-text">extraordinário?</span>
+      </h2>
+      <p class="reveal">Vamos transformar sua visão em uma experiência digital inesquecível.</p>
+      <a href="https://wa.me/55989843579080" target="_blank" rel="noopener"
+        class="btn btn-primary btn-lg reveal">Começar Agora</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════  FOOTER  ═══════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <img src="img/logo/Logo%20Saraiva%20Co..webp" alt="Saraiva Co." />
+        </a>
+        <p>Criando o futuro digital, um pixel por vez.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <a href="#services">Serviços</a>
+          <a href="#about">Sobre</a>
+          <a href="#work">Projetos</a>
+          <a href="#contact">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Social</h4>
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#" target="_blank" rel="noopener">Behance</a>
+          <a href="#" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 Saraiva Co. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" type="module"></script>
+</body>
+
+</html>
