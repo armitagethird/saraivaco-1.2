@@ -1497,6 +1497,267 @@ ul {
 /* ══════════════════════════════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   PRICING
+   ══════════════════════════════════════════════════════════ */
+.pricing {
+  padding: var(--section-padding) 0;
+  position: relative;
+  z-index: 1;
+}
+
+.pricing-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 56px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  margin-bottom: 64px;
+}
+
+.pricing-card {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all var(--transition-med);
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+}
+
+.pricing-card-header {
+  margin-bottom: 20px;
+}
+
+.pricing-card-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pricing-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent-light);
+  line-height: 1;
+}
+
+.pricing-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.pricing-features {
+  flex-grow: 1;
+  margin-bottom: 32px;
+}
+
+.pricing-features li {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.pricing-features .feature-dot {
+  margin-top: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.pricing-btn {
+  width: 100%;
+}
+
+/* ── Pro Plan (Featured Gold) ── */
+.pricing-card-pro {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(1.05);
+  box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);
+  z-index: 2;
+}
+
+.pricing-card-pro:hover {
+  border-color: rgba(212, 175, 55, 0.8);
+  transform: scale(1.05) translateY(-8px);
+  box-shadow: 0 15px 50px rgba(212, 175, 55, 0.2);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
+  color: #15182b;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 16px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+.pricing-card-glow-gold {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.pricing-card-pro .pricing-card-header h3 {
+  color: #f3e5ab;
+  background: linear-gradient(135deg, #f3e5ab, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricing-card-pro .pricing-price {
+  color: #f3e5ab;
+}
+
+.pricing-card-pro .feature-dot.gold {
+  background: linear-gradient(135deg, #f3e5ab, #d4af37);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  color: #15182b;
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #f3e5ab, #d4af37);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+}
+
+/* ── Premium Plan (Subtle Platinum/Silver) ── */
+.pricing-card-platinum {
+  border-color: rgba(229, 228, 226, 0.2);
+}
+
+.pricing-card-platinum:hover {
+  border-color: rgba(229, 228, 226, 0.6);
+  box-shadow: 0 10px 40px rgba(229, 228, 226, 0.1);
+}
+
+.pricing-card-platinum .pricing-card-header h3 {
+  color: #e5e4e2;
+  background: linear-gradient(135deg, #ffffff, #b0b4b6, #e5e4e2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricing-card-platinum .pricing-price {
+  color: #e5e4e2;
+}
+
+.pricing-card-platinum .feature-dot.platinum {
+  background: linear-gradient(135deg, #ffffff, #b0b4b6);
+}
+
+.btn-platinum {
+  border-color: rgba(229, 228, 226, 0.3);
+  color: #e5e4e2;
+}
+
+.btn-platinum:hover {
+  background: linear-gradient(135deg, #e5e4e2, #b0b4b6);
+  color: #15182b;
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(229, 228, 226, 0.25);
+}
+
+/* ── Support Section ── */
+.pricing-support {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.support-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+}
+
+.support-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.support-card {
+  padding: 24px;
+  text-align: left;
+}
+
+.support-card h4 {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.support-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  margin-bottom: 12px;
+}
+
+.support-price span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
+.support-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.pricing-footer {
+  text-align: center;
+  margin-top: 48px;
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
+}
+
+.pricing-footer strong {
+  color: var(--text-secondary);
+}
+
 @media (max-width: 992px) {
   .hero-content {
     text-align: center;
@@ -1559,10 +1820,23 @@ ul {
   }
 
   .work-grid,
-  .testimonials-grid {
+  .testimonials-grid,
+  .pricing-grid {
     grid-template-columns: 1fr;
     max-width: 520px;
     margin: 0 auto;
+  }
+
+  .pricing-card-pro {
+    transform: scale(1);
+  }
+
+  .pricing-card-pro:hover {
+    transform: translateY(-8px);
+  }
+
+  .support-options {
+    grid-template-columns: 1fr;
   }
 
   .about-cards-interactive {
