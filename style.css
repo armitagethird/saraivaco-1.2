@@ -50,6 +50,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -622,6 +623,12 @@ ul {
   }
 }
 
+@media (max-width: 768px) {
+  .hero-scroll-hint {
+    bottom: 10px;
+  }
+}
+
 /* ══════════════════════════════════════════════════════════
    SERVICES — Two-Column Layout (buttons left, panel right)
    ══════════════════════════════════════════════════════════ */
@@ -766,25 +773,7 @@ ul {
 }
 
 .service-panel-inner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 2px;
-  background: var(--gradient);
-  background-size: 50% 100%;
-  animation: gradient-slide 3s linear infinite;
-}
-
-@keyframes gradient-slide {
-  0% {
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  display: none;
 }
 
 .service-panel-header {
