@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   SARAIVA CO. — Interactions & Spline 3D
+   SARAIVA CO. — Interactions
    ═══════════════════════════════════════════════════════════ */
 
 // ── Scroll Reveal (IntersectionObserver) ──────────────────
@@ -233,198 +233,139 @@ aboutCards.forEach(card => {
 })();
 
 // ══════════════════════════════════════════════════════════
-// SPLINE 3D INTEGRATION — Lazy-loaded for smooth hero
+// 3D DOT-MATRIX ROTATING GLOBE (pure Canvas)
 // ══════════════════════════════════════════════════════════
 
-import { Application } from 'https://esm.sh/@splinetool/runtime';
+(function initGlobe() {
+  const canvas = document.getElementById('globe-canvas');
+  if (!canvas) return;
 
-const canvas3d = document.getElementById('canvas3d');
-const loader = document.getElementById('splineLoader');
+  const ctx = canvas.getContext('2d');
 
-if (canvas3d) {
-  // Start canvas hidden with GPU-ready layer
-  canvas3d.style.opacity = '0';
-  canvas3d.style.transition = 'opacity 1.2s ease';
-  canvas3d.style.willChange = 'transform, opacity';
+  // Globe params
+  const DOT_COUNT_LAT = 36;   // latitude lines
+  const DOT_COUNT_LON = 60;   // longitude lines
+  const ROTATION_SPEED = 0.003;
+  const PERSPECTIVE = 600;
+  const CONNECTION_DISTANCE = 35; // max px distance for drawing lines
 
-  // Defer Spline init so the hero text renders first (no freeze)
-  const initSpline = () => {
-    const spline = new Application(canvas3d);
+  let width, height, radius, centerX, centerY;
+  let rotation = 0;
+  let dots = [];
 
-    spline
-      .load('https://prod.spline.design/yjH4EpGcf9CRO5kj/scene.splinecode')
-      .then(() => {
-        console.log('✅ Spline scene loaded successfully!');
-
-        // Fade out the loader
-        if (loader) loader.classList.add('loaded');
-
-        // Fade in the canvas smoothly
-        requestAnimationFrame(() => {
-          canvas3d.style.opacity = '1';
-        });
-
-        // Clean up will-change after transition to free GPU memory
-        setTimeout(() => {
-          canvas3d.style.willChange = 'auto';
-        }, 2000);
-
-        // ── Start burst animation after fade-in ──
-        setTimeout(() => initBurstAnimation(canvas3d), 1200);
-      })
-      .catch((err) => {
-        console.warn('⚠️ Spline scene failed to load:', err);
-        if (loader) loader.classList.add('loaded');
-      });
-  };
-
-  // Use requestIdleCallback to wait until browser is idle (after hero paint)
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(initSpline, { timeout: 1500 });
-  } else {
-    setTimeout(initSpline, 300);
-  }
-
-  // ── Hero button click detection ──
-  // Since hero content has pointer-events: none (so Spline reacts everywhere),
-  // we detect clicks on the hero and check if they hit a button
-  const heroEl = document.getElementById('hero');
-  const heroButtons = document.querySelectorAll('.hero-actions .btn');
-
-  if (heroEl && heroButtons.length) {
-    // Handle clicks — check if click position overlaps any button
-    heroEl.addEventListener('click', (e) => {
-      for (const btn of heroButtons) {
-        const rect = btn.getBoundingClientRect();
-        if (
-          e.clientX >= rect.left &&
-          e.clientX <= rect.right &&
-          e.clientY >= rect.top &&
-          e.clientY <= rect.bottom
-        ) {
-          btn.click();
-          break;
-        }
-      }
-    });
-
-    // Handle cursor — show pointer when hovering over button areas
-    heroEl.addEventListener('mousemove', (e) => {
-      let overButton = false;
-      for (const btn of heroButtons) {
-        const rect = btn.getBoundingClientRect();
-        if (
-          e.clientX >= rect.left &&
-          e.clientX <= rect.right &&
-          e.clientY >= rect.top &&
-          e.clientY <= rect.bottom
-        ) {
-          overButton = true;
-          break;
-        }
-      }
-      heroEl.style.cursor = overButton ? 'pointer' : '';
-    }, { passive: true });
-  }
-}
-
-// ══════════════════════════════════════════════════════════
-// Startup Burst Animation
-// ══════════════════════════════════════════════════════════
-// This optimized version plays the intro animation on load
-// and then completely stops, saving ~40s of Main-Thread CPU.
-
-function initBurstAnimation(canvas) {
-  playIdleSweep(canvas);
-}
-
-function playIdleSweep(canvas) {
-  const FRAME_INTERVAL = 40; // ~25fps is enough for the intro sweep
-  let startTime = null;
-  let lastFrameTime = 0;
-
-  // ── Burst intro config ──
-  const BURST_DURATION = 5;    // 5 seconds of gentle spin
-  const BURST_FADE = 3;        // 3 seconds to transition to calm
-  const TOTAL_DURATION = BURST_DURATION + BURST_FADE;
-
-  function animate(now) {
-    if (!startTime) startTime = now;
-    const rawT = (now - startTime) / 1000;
-
-    // Stop animation entirely after the burst to save CPU/Thread Main
-    if (rawT > TOTAL_DURATION) {
-      return;
-    }
-
-    if (now - lastFrameTime < FRAME_INTERVAL) {
-      requestAnimationFrame(animate);
-      return;
-    }
-    lastFrameTime = now;
-
-    // ── Burst blend factor ──
-    let burst = 0;
-    if (rawT < BURST_DURATION) {
-      burst = 1;
-    } else {
-      const fadeProgress = (rawT - BURST_DURATION) / BURST_FADE;
-      burst = 1 - fadeProgress * fadeProgress;
-    }
-
+  function resize() {
     const rect = canvas.getBoundingClientRect();
-
-    // ── Calm idle movement (organic pulse) ──
-    const idleX = 0.5
-      + Math.sin(rawT * 0.31) * 0.2
-      + Math.sin(rawT * 0.197 + 1.7) * 0.12
-      + Math.sin(rawT * 0.127 + 3.1) * 0.07;
-
-    const idleY = 0.45
-      + Math.sin(rawT * 0.23 + 0.5) * 0.18
-      + Math.sin(rawT * 0.151 + 2.3) * 0.1
-      + Math.sin(rawT * 0.089 + 4.7) * 0.05;
-
-    // ── Burst spin movement (circular orbit) ──
-    const spinSpeed = 0.5 - (rawT / BURST_DURATION) * 0.15; // slow dreamy spin
-    const spinAngle = rawT * spinSpeed * Math.PI * 2;
-    const spinRadius = 0.3 * (1 - rawT / TOTAL_DURATION); // shrinking orbit
-    const spinX = 0.5 + Math.cos(spinAngle) * spinRadius;
-    const spinY = 0.45 + Math.sin(spinAngle) * spinRadius * 0.7; // slightly oval
-
-    // ── Blend: spin during burst → organic pulse after ──
-    const finalX = burst * spinX + (1 - burst) * idleX;
-    const finalY = burst * spinY + (1 - burst) * idleY;
-
-    const x = rect.left + rect.width * finalX;
-    const y = rect.top + rect.height * finalY;
-
-    const cx = Math.max(rect.left + 20, Math.min(rect.right - 20, x));
-    const cy = Math.max(rect.top + 20, Math.min(rect.bottom - 20, y));
-
-    canvas.dispatchEvent(new PointerEvent('pointermove', {
-      clientX: cx,
-      clientY: cy,
-      bubbles: true,
-      pointerType: 'mouse',
-    }));
-
-    canvas.dispatchEvent(new MouseEvent('mousemove', {
-      clientX: cx,
-      clientY: cy,
-      bubbles: true,
-    }));
-
-    requestAnimationFrame(animate);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width;
+    height = rect.height;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    radius = Math.min(width, height) * 0.42;
+    centerX = width / 2;
+    centerY = height / 2;
   }
 
-  // Activate the scene
-  const rect = canvas.getBoundingClientRect();
-  canvas.dispatchEvent(new MouseEvent('mouseenter', {
-    clientX: rect.left + rect.width * 0.5,
-    clientY: rect.top + rect.height * 0.5,
-    bubbles: true,
-  }));
+  // Generate dots on a sphere surface
+  function generateDots() {
+    dots = [];
+    for (let lat = 0; lat < DOT_COUNT_LAT; lat++) {
+      const phi = (Math.PI / DOT_COUNT_LAT) * lat; // 0 to PI (pole to pole)
+      // More dots near equator, fewer at poles (natural sphere distribution)
+      const dotsAtLat = Math.max(4, Math.round(DOT_COUNT_LON * Math.sin(phi)));
+      for (let lon = 0; lon < dotsAtLat; lon++) {
+        const theta = (2 * Math.PI / dotsAtLat) * lon; // 0 to 2PI
+        dots.push({ phi, theta });
+      }
+    }
+  }
 
-  requestAnimationFrame(animate);
-}
+  // Project a 3D point to 2D with perspective
+  function project(phi, theta, rot) {
+    // Spherical to cartesian
+    const x = radius * Math.sin(phi) * Math.cos(theta + rot);
+    const y = radius * Math.cos(phi);
+    const z = radius * Math.sin(phi) * Math.sin(theta + rot);
+
+    // Perspective projection
+    const scale = PERSPECTIVE / (PERSPECTIVE + z);
+    const px = centerX + x * scale;
+    const py = centerY + y * scale;
+
+    return { px, py, z, scale };
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    rotation += ROTATION_SPEED;
+
+    // Project all dots
+    const projected = [];
+    for (const dot of dots) {
+      const p = project(dot.phi, dot.theta, rotation);
+      // Only show front-facing dots (z < some threshold for fade)
+      if (p.z > -radius * 0.2) {
+        // Normalize z for alpha: front = bright, back = dim
+        const normalizedZ = (p.z + radius) / (2 * radius);
+        const alpha = Math.pow(normalizedZ, 1.5) * 0.9 + 0.1;
+        projected.push({ ...p, alpha });
+      }
+    }
+
+    // Draw a subtle atmospheric glow behind the globe
+    const gradient = ctx.createRadialGradient(centerX, centerY, radius * 0.6, centerX, centerY, radius * 1.3);
+    gradient.addColorStop(0, 'rgba(209, 79, 133, 0.06)');
+    gradient.addColorStop(0.5, 'rgba(179, 143, 200, 0.03)');
+    gradient.addColorStop(1, 'rgba(209, 79, 133, 0)');
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius * 1.3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw connection lines between nearby dots (subtle)
+    ctx.lineWidth = 0.6;
+    for (let i = 0; i < projected.length; i++) {
+      for (let j = i + 1; j < projected.length; j++) {
+        const dx = projected[i].px - projected[j].px;
+        const dy = projected[i].py - projected[j].py;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECTION_DISTANCE) {
+          const lineAlpha = (1 - dist / CONNECTION_DISTANCE) * Math.min(projected[i].alpha, projected[j].alpha) * 0.45;
+          ctx.strokeStyle = `rgba(209, 79, 133, ${lineAlpha})`;
+          ctx.beginPath();
+          ctx.moveTo(projected[i].px, projected[i].py);
+          ctx.lineTo(projected[j].px, projected[j].py);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw dots with glow
+    for (const p of projected) {
+      const dotRadius = Math.max(1.2, 2.5 * p.scale);
+
+      // Subtle glow around each dot
+      ctx.beginPath();
+      ctx.arc(p.px, p.py, dotRadius * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(209, 79, 133, ${p.alpha * 0.15})`;
+      ctx.fill();
+
+      // The dot itself
+      ctx.beginPath();
+      ctx.arc(p.px, p.py, dotRadius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(230, 117, 166, ${p.alpha})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  generateDots();
+  requestAnimationFrame(draw);
+
+  window.addEventListener('resize', () => {
+    resize();
+  });
+})();

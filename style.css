@@ -366,30 +366,7 @@ ul {
   overflow: hidden;
 }
 
-/* ── Spline 3D Full Background ── */
-.hero-3d-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
 
-.hero-3d-bg canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-  object-fit: cover;
-  transform: scale(1.35);
-  transform-origin: center center;
-}
-
-.hero-3d-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(to right, rgba(7, 7, 13, 0.82) 0%, rgba(7, 7, 13, 0.55) 45%, rgba(7, 7, 13, 0.15) 100%);
-  pointer-events: none;
-}
 
 .hero-bg-glow {
   position: absolute;
@@ -413,6 +390,39 @@ ul {
   100% {
     opacity: 1;
     transform: translateX(-50%) scale(1.15);
+  }
+}
+
+/* ── Globe Canvas ── */
+#globe-canvas {
+  position: absolute;
+  top: 50%;
+  right: -2%;
+  transform: translateY(-50%);
+  width: 800px;
+  height: 800px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  #globe-canvas {
+    width: 500px;
+    height: 500px;
+    right: -10%;
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 768px) {
+  #globe-canvas {
+    width: 450px;
+    height: 450px;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%);
+    opacity: 0.25;
   }
 }
 
@@ -547,38 +557,7 @@ ul {
   transform: translateY(-2px);
 }
 
-/* ── Spline Loader ── */
-.spline-loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(21, 24, 43, 0.85);
-  z-index: 2;
-  opacity: 1;
-  transition: opacity 0.8s ease;
-}
 
-.spline-loader.loaded {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.loader-ring {
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--border-subtle);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 /* ── Scroll hint ── */
 .hero-scroll-hint {
