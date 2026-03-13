@@ -197,7 +197,11 @@ aboutCards.forEach(card => {
     }
   }
 
+  let animationId;
+  let isVisible = true;
+
   function draw(time) {
+    if (!isVisible) return;
     ctx.clearRect(0, 0, w, h);
 
     for (const p of particles) {
@@ -219,12 +223,19 @@ aboutCards.forEach(card => {
       if (p.x > w + 5) p.x = -5;
     }
 
-    requestAnimationFrame(draw);
+    animationId = requestAnimationFrame(draw);
   }
 
   resize();
   createParticles();
-  requestAnimationFrame(draw);
+
+  const observer = new IntersectionObserver((entries) => {
+    isVisible = entries[0].isIntersecting;
+    if (isVisible) draw(performance.now());
+    else cancelAnimationFrame(animationId);
+  }, { threshold: 0 });
+
+  observer.observe(canvas);
 
   window.addEventListener('resize', () => {
     resize();
@@ -252,6 +263,8 @@ aboutCards.forEach(card => {
   let width, height, radius, centerX, centerY;
   let rotation = 0;
   let dots = [];
+  let animationId;
+  let isVisible = true;
 
   function resize() {
     const rect = canvas.getBoundingClientRect();
@@ -296,6 +309,7 @@ aboutCards.forEach(card => {
   }
 
   function draw() {
+    if (!isVisible) return;
     ctx.clearRect(0, 0, width, height);
 
     rotation += ROTATION_SPEED;
@@ -323,23 +337,7 @@ aboutCards.forEach(card => {
     ctx.arc(centerX, centerY, radius * 1.3, 0, Math.PI * 2);
     ctx.fill();
 
-    // Draw connection lines between nearby dots (subtle)
-    ctx.lineWidth = 0.6;
-    for (let i = 0; i < projected.length; i++) {
-      for (let j = i + 1; j < projected.length; j++) {
-        const dx = projected[i].px - projected[j].px;
-        const dy = projected[i].py - projected[j].py;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < CONNECTION_DISTANCE) {
-          const lineAlpha = (1 - dist / CONNECTION_DISTANCE) * Math.min(projected[i].alpha, projected[j].alpha) * 0.45;
-          ctx.strokeStyle = `rgba(209, 79, 133, ${lineAlpha})`;
-          ctx.beginPath();
-          ctx.moveTo(projected[i].px, projected[i].py);
-          ctx.lineTo(projected[j].px, projected[j].py);
-          ctx.stroke();
-        }
-      }
-    }
+    // Connection lines removed to eliminate O(N^2) main-thread block
 
     // Draw dots with glow
     for (const p of projected) {
@@ -358,12 +356,19 @@ aboutCards.forEach(card => {
       ctx.fill();
     }
 
-    requestAnimationFrame(draw);
+    animationId = requestAnimationFrame(draw);
   }
 
   resize();
   generateDots();
-  requestAnimationFrame(draw);
+
+  const observer = new IntersectionObserver((entries) => {
+    isVisible = entries[0].isIntersecting;
+    if (isVisible) draw();
+    else cancelAnimationFrame(animationId);
+  }, { threshold: 0 });
+
+  observer.observe(canvas);
 
   window.addEventListener('resize', () => {
     resize();
